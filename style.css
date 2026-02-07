@@ -1,0 +1,429 @@
+/* =========================================
+   1. CORE VARIABLES & THEME CONFIGURATION
+   ========================================= */
+:root {
+    /* --- Palette: Hamad International Airport Identity --- */
+    --color-primary: #8A1538;   /* Qatar Burgundy */
+    --color-accent: #D4AF37;    /* Gold */
+    --color-dark: #121212;      /* Deep Slate Background */
+    --color-surface: #1E1E1E;   /* Surface/Card Grey */
+    --color-surface-hover: #252525;
+    --color-text: #F4F4F4;      /* Off White */
+    --color-text-muted: #A0A0A0;
+    
+    /* --- Typography --- */
+    --font-heading: 'Playfair Display', serif; /* Elegant, Premium */
+    --font-body: 'Lato', sans-serif;           /* Clean, Modern */
+    --font-arabic: 'Times New Roman', serif;   /* Classic Arabic support */
+    
+    /* --- Spacing & Layout --- */
+    --container-width: 1200px;
+    --header-height: 80px;
+    --radius-std: 8px;
+    
+    /* --- Effects --- */
+    --shadow-card: 0 10px 30px rgba(0,0,0,0.5);
+    --glow-gold: 0 0 15px rgba(212, 175, 55, 0.3);
+    --transition-std: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* =========================================
+   2. RESET & GLOBAL STYLES
+   ========================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--color-dark);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+a { text-decoration: none; color: inherit; cursor: pointer; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* =========================================
+   3. UTILITIES & BACKGROUNDS
+   ========================================= */
+
+/* Abstract Mashrabiya (Geometric) Background Pattern */
+.bg-mashrabiya {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    opacity: 0.03;
+    /* CSS Gradient trick to create geometric patterns */
+    background-image: 
+        radial-gradient(var(--color-accent) 2px, transparent 2px), 
+        radial-gradient(var(--color-accent) 2px, transparent 2px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    pointer-events: none;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Typography Utilities */
+.text-gold { color: var(--color-accent); }
+.text-burgundy { color: var(--color-primary); }
+.text-muted { color: var(--color-text-muted); }
+.text-center { text-align: center; }
+.hidden { display: none !important; }
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: transparent;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-std);
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background: var(--color-accent);
+    color: var(--color-dark);
+    box-shadow: var(--glow-gold);
+}
+
+/* =========================================
+   4. HEADER & NAVIGATION
+   ========================================= */
+.header {
+    position: fixed;
+    top: 0; width: 100%;
+    height: var(--header-height);
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+.header__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.header__logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--color-text);
+}
+
+.header__menu {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-link {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    transition: var(--transition-std);
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-accent);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; width: 100%; height: 2px;
+    background-color: var(--color-accent);
+}
+
+/* Mobile Menu Toggle (Simplified) */
+@media (max-width: 768px) {
+    .header__menu { display: none; } /* In production, add a JS toggle here */
+}
+
+/* =========================================
+   5. PAGE TRANSITIONS & STRUCTURE
+   ========================================= */
+.page {
+    min-height: 100vh;
+    padding-top: var(--header-height);
+    opacity: 0;
+    transform: translateY(20px);
+    display: none; /* Hidden by default */
+}
+
+.page.active { 
+    display: block; 
+    animation: fadeInPage 0.8s forwards;
+}
+
+@keyframes fadeInPage {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   6. HERO SECTION
+   ========================================= */
+.hero {
+    height: calc(100vh - var(--header-height));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* NOTE: Replace the URL below with your generated AI Image 
+       Example: url('images/hero-bg.jpg');
+    */
+    background: linear-gradient(rgba(18,18,18,0.7), rgba(18,18,18,0.9)), url('https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&q=80&w=1920');
+    
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.hero__content {
+    text-align: center;
+    max-width: 800px;
+    z-index: 2;
+    padding: 0 20px;
+}
+
+.hero__title {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    /* Gold Gradient Text */
+    background: linear-gradient(45deg, #fff, var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero__arabic {
+    font-family: var(--font-arabic);
+    font-size: 1.8rem;
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+    direction: rtl;
+}
+
+/* =========================================
+   7. COMPONENTS: CARDS & GRIDS
+   ========================================= */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.card {
+    background: var(--color-surface);
+    padding: 40px 30px;
+    border-radius: var(--radius-std);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: var(--transition-std);
+    overflow: hidden;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-accent);
+    background: var(--color-surface-hover);
+    box-shadow: var(--shadow-card);
+}
+
+.card__icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 25px;
+    fill: var(--color-accent);
+}
+
+.card h3 {
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+}
+
+/* Image styles within cards (if added) */
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    opacity: 0.9;
+    transition: opacity 0.3s;
+}
+
+.card:hover img { opacity: 1; }
+
+/* =========================================
+   8. COMPONENTS: TECH FLOW DIAGRAM (ANIMATED)
+   ========================================= */
+.flow-diagram-container {
+    width: 100%;
+    background: linear-gradient(180deg, rgba(30,30,30,0.5) 0%, rgba(18,18,18,0.8) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.1); /* Subtle gold border */
+    border-radius: var(--radius-std);
+    padding: 30px;
+    margin-bottom: 50px;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.tech-flow-svg {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* Limit height on large screens */
+    overflow: visible;
+}
+
+/* Interactivity for SVG Groups */
+.flow-step {
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.flow-step:hover {
+    transform: translateY(-5px) scale(1.05);
+    filter: drop-shadow(0 0 8px var(--color-accent));
+}
+
+.flow-step:hover circle {
+    stroke: var(--color-accent);
+    fill: #252525;
+}
+
+/* Dotted Line Animation (The Data Highway) */
+.flow-line {
+    animation: dashMove 20s linear infinite;
+}
+
+@keyframes dashMove {
+    to {
+        stroke-dashoffset: -1000;
+    }
+}
+
+/* =========================================
+   9. COMPONENTS: ROI MATRIX (TABLES & CHARTS)
+   ========================================= */
+.roi-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-top: 60px;
+}
+
+/* Media query for mobile responsiveness */
+@media (max-width: 900px) {
+    .roi-container { grid-template-columns: 1fr; }
+    .hero__title { font-size: 2.5rem; }
+    .tech-flow-svg { min-width: 800px; } /* Allow horizontal scroll for diagram on mobile */
+    .flow-diagram-container { overflow-x: auto; }
+}
+
+.impact-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Courier New', monospace; /* Technical look */
+    font-size: 0.9rem;
+    background: rgba(255,255,255,0.02);
+}
+
+.impact-matrix th, .impact-matrix td {
+    border: 1px solid #333;
+    padding: 15px;
+    text-align: left;
+}
+
+.impact-matrix th { 
+    color: var(--color-accent); 
+    text-transform: uppercase; 
+    border-bottom: 2px solid var(--color-primary);
+}
+
+.chart-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: var(--radius-std);
+    color: #333;
+}
+
+/* =========================================
+   10. COMPONENTS: TOC (Theory of Constraints) VISUAL
+   ========================================= */
+.toc-visual {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    background: rgba(255,255,255,0.02);
+    border-radius: var(--radius-std);
+    margin: 40px 0;
+    overflow-x: auto;
+}
+
+.toc-node {
+    text-align: center;
+    position: relative;
+    min-width: 120px;
+}
+
+.toc-node svg { 
+    width: 60px; 
+    height: 60px; 
+    fill: #555; 
+    margin-bottom: 15px; 
+    transition: 0.3s; 
+}
+
+/* Highlight the bottleneck (Constraint) */
+.toc-node.constraint svg { 
+    fill: var(--color-primary); 
+    transform: scale(1.2); 
+    filter: drop-shadow(0 0 8px rgba(138, 21, 56, 0.5));
+}
+
+.toc-node.constraint h4 { color: var(--color-primary); }
+
+.toc-arrow { 
+    color: #444; 
+    font-size: 2rem; 
+    padding: 0 10px;
+}
+
+/* =========================================
+   11. FOOTER
+   ========================================= */
+footer {
+    margin-top: 100px;
+    border-top: 1px solid #333;
+    padding: 60px 20px;
+    text-align: center;
+    background: rgba(0,0,0,0.2);
+}
